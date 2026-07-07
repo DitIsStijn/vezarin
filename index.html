@@ -7,6 +7,7 @@
 <meta name="description" content="Vezarin: het volk geboren uit de Rift tussen Solir en Noxir, verscholen in Elyrion en gedragen door de Wet van Balans.">
 <meta property="og:title" content="Vezarin — Het Volk van Licht en Leegte">
 <meta property="og:description" content="Eén Balans · Eén Rift · Eén Volk.">
+<meta property="og:image" content="images/hero-elyrion.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#08080a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,6 +40,7 @@
     font-size:19px;
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
+    position:relative;
   }
   h1,h2,h3,.label{
     font-family:'Cinzel', serif;
@@ -54,11 +56,14 @@
     letter-spacing:0.32em;
     text-transform:uppercase;
     color:var(--gold-soft);
+    display:inline-flex; align-items:center; gap:10px;
   }
   .label.violet{color:var(--violet);}
+  .label .dia{width:5px;height:5px;background:currentColor;transform:rotate(45deg); flex:none; opacity:0.8;}
   p{color:var(--ink-dim); margin:0 0 16px;}
   p:last-child{margin-bottom:0;}
   strong{color:var(--ink); font-weight:600;}
+  em{color:#cfc7b4;}
 
   /* ---------- background texture ---------- */
   body{
@@ -67,6 +72,11 @@
       radial-gradient(ellipse 900px 500px at 85% 8%, rgba(201,163,90,0.08), transparent 60%),
       radial-gradient(ellipse 1200px 800px at 50% 100%, rgba(132,103,201,0.06), transparent 60%);
     background-attachment:fixed;
+  }
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:5;
+    opacity:0.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
 
   /* ---------- balance divider (signature motif) ---------- */
@@ -92,22 +102,41 @@
     animation:drift 9s ease-in-out infinite;
     box-shadow:0 0 10px rgba(233,227,214,0.6);
   }
-  @keyframes drift{
-    0%,100%{left:50%;}
-    50%{left:44%;}
+  @keyframes drift{ 0%,100%{left:50%;} 50%{left:44%;} }
+  @media (prefers-reduced-motion: reduce){ .marker{animation:none;} }
+
+  /* ---------- framed plates (medieval corner brackets) ---------- */
+  .frame{
+    position:relative; padding:9px;
+    border:1px solid var(--line);
+    background:var(--bg-card);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
   }
-  @media (prefers-reduced-motion: reduce){
-    .marker{animation:none;}
+  .frame img{display:block; width:100%; height:auto; opacity:0.94;}
+  .corner{position:absolute; width:20px; height:20px;}
+  .corner.tl{top:-1px; left:-1px; border-top:2px solid var(--gold); border-left:2px solid var(--gold);}
+  .corner.tr{top:-1px; right:-1px; border-top:2px solid var(--gold); border-right:2px solid var(--gold);}
+  .corner.bl{bottom:-1px; left:-1px; border-bottom:2px solid var(--violet); border-left:2px solid var(--violet);}
+  .corner.br{bottom:-1px; right:-1px; border-bottom:2px solid var(--violet); border-right:2px solid var(--violet);}
+  .plate-caption{
+    text-align:center; margin-top:18px;
+  }
+  .plate-caption .cap-title{
+    font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--ink);
+  }
+  .plate-caption .cap-sub{
+    font-style:italic; color:var(--ink-faint); font-size:15.5px; margin-top:4px;
   }
 
   /* ---------- hero ---------- */
   .hero{
-    padding:96px 32px 0;
+    padding:110px 32px 0;
     text-align:center;
   }
-  .hero .label{display:block; margin-bottom:22px;}
+  .hero .label{margin-bottom:22px; justify-content:center; width:100%;}
   .hero h1{
-    font-size:clamp(56px, 11vw, 118px);
+    font-size:clamp(56px, 11vw, 120px);
     font-weight:800;
     letter-spacing:0.12em;
     background:linear-gradient(100deg, var(--gold) 0%, var(--ink) 35%, var(--ink) 65%, var(--violet) 100%);
@@ -141,9 +170,7 @@
     text-transform:uppercase; color:var(--ink-dim);
     padding-bottom:10px; position:relative;
   }
-  .pillars .pillar::after{
-    content:''; position:absolute; left:0; right:0; bottom:0; height:1px;
-  }
+  .pillars .pillar::after{ content:''; position:absolute; left:0; right:0; bottom:0; height:1px; }
   .pillars .pillar.solir{color:var(--gold);}
   .pillars .pillar.solir::after{background:var(--gold);}
   .pillars .pillar.balans{color:var(--ink);}
@@ -156,8 +183,12 @@
     font-style:italic; color:var(--ink-faint); font-size:17px;
   }
 
+  /* ---------- hero banner plate ---------- */
+  .hero-plate{ max-width:var(--maxw); margin:64px auto 0; padding:0 32px; }
+  .hero-plate .frame{padding:12px;}
+
   /* ---------- generic section ---------- */
-  section{padding:64px 32px;}
+  section{padding:70px 32px;}
   .section-head{max-width:640px; margin:0 auto 40px;}
   .section-head.center{text-align:center; margin-left:auto; margin-right:auto;}
   .section-head h2{
@@ -167,6 +198,10 @@
   }
   .prose{max-width:720px; margin:0 auto;}
   .prose p{font-size:20px;}
+  .prose p:first-of-type::first-letter{
+    font-family:'Cinzel',serif; font-size:56px; float:left; line-height:0.8;
+    padding:8px 10px 0 0; color:var(--gold);
+  }
 
   /* ---------- intro two-col ---------- */
   .intro-grid{
@@ -175,88 +210,97 @@
   }
   .intro-grid .col p{font-size:18.5px;}
 
-  /* ---------- contrast statement ---------- */
-  .contrast{
-    background:var(--bg-alt);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
+  /* ---------- figure grid (text + framed image) ---------- */
+  .figure-grid{
+    max-width:var(--maxw); margin:0 auto;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center;
   }
+  .figure-grid.reverse{grid-template-columns:0.85fr 1.15fr;}
+  .figure-grid.reverse .text{order:2;}
+  .figure-grid.reverse .art{order:1;}
+  .figure-grid .text p{font-size:19px;}
+
+  /* ---------- contrast statement ---------- */
+  .contrast{ background:var(--bg-alt); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .contrast .prose{text-align:center;}
   .contrast .prose p{font-size:22px; font-style:italic; color:#c9c3b3;}
+  .contrast .prose p::first-letter{all:unset;}
   .contrast .prose .accent-g{color:var(--gold); font-style:normal;}
   .contrast .prose .accent-v{color:var(--violet); font-style:normal;}
 
-  /* ---------- districts ---------- */
+  /* ---------- districts (image cards) ---------- */
   .districts-grid{
     max-width:var(--maxw); margin:0 auto;
     display:grid; grid-template-columns:repeat(5,1fr); gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
+    background:var(--line); border:1px solid var(--line);
   }
-  .district{
-    background:var(--bg-card); padding:28px 22px;
+  .district{ background:var(--bg-card); display:flex; flex-direction:column; }
+  .district .thumb{ position:relative; aspect-ratio:4/3; overflow:hidden; }
+  .district .thumb img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:saturate(0.9) brightness(0.85);
+    transition:transform .6s ease, filter .6s ease;
   }
-  .district .num{
-    font-family:'Cinzel',serif; font-size:11px; letter-spacing:0.2em;
-    color:var(--ink-faint);
+  .district:hover .thumb img{ transform:scale(1.06); filter:saturate(1.05) brightness(1); }
+  .district .thumb .num{
+    position:absolute; top:8px; left:8px;
+    font-family:'Cinzel',serif; font-size:10px; letter-spacing:0.15em;
+    background:rgba(8,8,10,0.75); border:1px solid var(--line);
+    color:var(--gold); padding:3px 7px;
   }
-  .district h3{
-    font-size:18px; margin-top:14px; margin-bottom:12px; line-height:1.3;
-    letter-spacing:0.02em;
+  .district .body{ padding:20px 18px; }
+  .district h3{ font-size:17px; margin-bottom:10px; line-height:1.3; letter-spacing:0.02em; }
+  .district p{ font-size:14.5px; line-height:1.55; }
+
+  /* ---------- places of power (gallery) ---------- */
+  .pop-grid{
+    max-width:var(--maxw); margin:0 auto;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:22px;
   }
-  .district p{font-size:15.5px; line-height:1.55;}
+  .pop-card{ background:var(--bg-card); border:1px solid var(--line); overflow:hidden; }
+  .pop-card .thumb{ position:relative; aspect-ratio:3/2; overflow:hidden; }
+  .pop-card .thumb img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:saturate(0.9) brightness(0.82);
+    transition:transform .6s ease, filter .6s ease;
+  }
+  .pop-card:hover .thumb img{ transform:scale(1.05); filter:saturate(1.05) brightness(0.98); }
+  .pop-card .thumb::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 55%, rgba(8,8,10,0.85) 100%);
+  }
+  .pop-card .body{ padding:20px 20px 22px; }
+  .pop-card h3{ font-size:17.5px; margin-bottom:9px; }
+  .pop-card p{ font-size:15px; }
 
   /* ---------- laws ---------- */
   .laws{max-width:820px; margin:0 auto;}
-  .law{
-    display:grid; grid-template-columns:64px 1fr; gap:22px;
-    padding:26px 0; border-bottom:1px solid var(--line);
-  }
+  .law{ display:grid; grid-template-columns:64px 1fr; gap:22px; padding:26px 0; border-bottom:1px solid var(--line); }
   .law:first-child{border-top:1px solid var(--line);}
-  .law .roman{
-    font-family:'Cinzel',serif; font-size:22px; color:var(--gold);
-    padding-top:2px;
-  }
+  .law .roman{ font-family:'Cinzel',serif; font-size:22px; color:var(--gold); padding-top:2px; }
   .law:nth-child(even) .roman{color:var(--violet);}
   .law h3{font-size:19px; margin-bottom:8px; font-weight:600; letter-spacing:0.01em;}
   .law p{font-size:17.5px;}
 
   /* ---------- hierarchy ---------- */
   .hier{max-width:820px; margin:0 auto;}
-  .tier{
-    display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:baseline;
-    padding:22px 0; border-bottom:1px solid var(--line);
-  }
+  .tier{ display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:baseline; padding:22px 0; border-bottom:1px solid var(--line); }
   .tier:first-child{border-top:1px solid var(--line);}
-  .tier .name{
-    font-family:'Cinzel',serif; font-size:16px; letter-spacing:0.06em; color:var(--gold);
-  }
+  .tier .name{ font-family:'Cinzel',serif; font-size:16px; letter-spacing:0.06em; color:var(--gold); }
   .tier:nth-child(2) .name{color:var(--ink);}
   .tier:nth-child(3) .name{color:var(--ink-dim);}
   .tier:nth-child(4) .name{color:var(--violet);}
   .tier p{font-size:17px;}
 
   /* ---------- roles ---------- */
-  .roles-grid{
-    max-width:var(--maxw); margin:0 auto;
-    display:grid; grid-template-columns:repeat(5,1fr); gap:20px;
-  }
-  .role{
-    border:1px solid var(--line); padding:20px 16px; text-align:center;
-    background:var(--bg-card);
-  }
-  .role .name{
-    font-family:'Cinzel',serif; font-size:13.5px; letter-spacing:0.1em;
-    color:var(--ink); margin-bottom:8px; display:block;
-  }
-  .role p{font-size:14.5px; line-height:1.5;}
+  .roles-grid{ max-width:var(--maxw); margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+  .role{ border:1px solid var(--line); padding:22px 16px; text-align:center; background:var(--bg-card); }
+  .role .name{ font-family:'Cinzel',serif; font-size:13.5px; letter-spacing:0.1em; color:var(--ink); margin-bottom:8px; display:block; }
+  .role p{ font-size:14.5px; line-height:1.5; }
 
   /* ---------- timeline ---------- */
   .timeline{max-width:760px; margin:0 auto;}
-  .era{
-    position:relative; padding:0 0 44px 32px;
-    border-left:1px solid var(--line);
-  }
+  .era{ position:relative; padding:0 0 44px 32px; border-left:1px solid var(--line); }
   .era:last-child{padding-bottom:0;}
   .era::before{
     content:''; position:absolute; left:-5px; top:4px;
@@ -264,7 +308,7 @@
     border:1px solid var(--gold); transform:rotate(45deg);
   }
   .era.current::before{border-color:var(--violet); background:var(--violet);}
-  .era .label{margin-bottom:8px; display:block;}
+  .era .label{margin-bottom:8px; display:inline-flex;}
   .era h3{font-size:21px; margin-bottom:8px;}
   .era p{font-size:17.5px;}
 
@@ -272,24 +316,32 @@
   .borders-grid{
     max-width:var(--maxw); margin:0 auto;
     display:grid; grid-template-columns:1fr 1fr; gap:1px;
-    background:var(--line);
-    border:1px solid var(--line);
+    background:var(--line); border:1px solid var(--line);
   }
   .border-card{background:var(--bg-card); padding:36px;}
-  .border-card .label{margin-bottom:10px; display:block;}
+  .border-card .label{margin-bottom:10px;}
   .border-card h3{font-size:22px; margin-bottom:14px;}
   .border-card p{font-size:17px;}
 
   /* ---------- footer ---------- */
-  footer{
-    text-align:center; padding:56px 32px 72px;
+  footer{ text-align:center; padding:60px 32px 76px; border-top:1px solid var(--line); }
+  footer .sigil{
+    width:34px; height:34px; margin:0 auto 22px;
+    border:1px solid var(--line); transform:rotate(45deg);
+    display:flex; align-items:center; justify-content:center;
   }
+  footer .sigil span{ width:8px; height:8px; background:linear-gradient(135deg, var(--gold), var(--violet)); transform:rotate(0deg); }
   footer .glyphline{
     font-family:'Cinzel',serif; font-size:12.5px; letter-spacing:0.34em;
     color:var(--ink-faint); text-transform:uppercase;
   }
 
   /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .figure-grid, .figure-grid.reverse{grid-template-columns:1fr; gap:32px;}
+    .figure-grid.reverse .text{order:1;} .figure-grid.reverse .art{order:2;}
+    .pop-grid{grid-template-columns:repeat(2,1fr);}
+  }
   @media (max-width:860px){
     .intro-grid{grid-template-columns:1fr; gap:8px;}
     .districts-grid{grid-template-columns:repeat(2,1fr);}
@@ -301,15 +353,18 @@
   @media (max-width:520px){
     .districts-grid{grid-template-columns:1fr;}
     .roles-grid{grid-template-columns:1fr;}
-    section{padding:48px 20px;}
+    .pop-grid{grid-template-columns:1fr;}
+    section{padding:52px 20px;}
+    .hero{padding:80px 20px 0;}
   }
 </style>
 </head>
 <body>
+<div class="grain"></div>
 
 <!-- HERO -->
 <div class="hero">
-  <span class="label">Het Volk van de Rift</span>
+  <span class="label"><span class="dia"></span>Het Volk van de Rift<span class="dia"></span></span>
   <h1>VEZARIN</h1>
   <div class="subtitle">Het Volk van Licht en Leegte</div>
   <div class="tagline">De balans tussen vlees en leegte</div>
@@ -321,12 +376,24 @@
   <p class="hero-note">Solir geeft richting. Noxir geeft diepte. Wat de Vezarin in leven houdt, is alles daartussen.</p>
 </div>
 
+<!-- HERO BANNER PLATE -->
+<div class="hero-plate">
+  <div class="frame">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+    <img src="images/hero-elyrion.jpg" alt="Elyrion, de verhulde bergstad van de Vezarin, gebouwd rond de bron van balans">
+  </div>
+  <div class="plate-caption">
+    <div class="cap-title">Elyrion — Hart van de Vezarin</div>
+    <div class="cap-sub">Een bergstad gebouwd rond de bron van balans zelf, waar licht en leegte in harmonie samenleven.</div>
+  </div>
+</div>
+
 <div class="balance"><span class="side left">Solir</span><div class="track"><div class="marker"></div></div><span class="side right">Noxir</span></div>
 
 <!-- WHO ARE THE VEZARIN -->
 <section>
   <div class="section-head center">
-    <span class="label">Wie zij zijn</span>
+    <span class="label"><span class="dia"></span>Wie zij zijn<span class="dia"></span></span>
     <h2>Het Volk Tussen Twee Werelden</h2>
   </div>
   <div class="intro-grid">
@@ -346,13 +413,25 @@
 <!-- THE ROAD OF BALANCE -->
 <section>
   <div class="section-head center">
-    <span class="label violet">De Verscholen Hoofdstad</span>
+    <span class="label violet"><span class="dia"></span>De Verscholen Hoofdstad<span class="dia"></span></span>
     <h2>De Weg van Balans</h2>
   </div>
-  <div class="prose">
-    <p>Diep in de marmeren hooglanden, verscholen achter mist, ruïne en eeuwenoude wardens, ligt <strong>Elyrion</strong> — door hen die haar ooit vanaf de rivier zagen liggen ook wel <em>Witherbridge</em> genoemd. De stad is niet te vinden door wie haar zoekt; alleen wie een doel of toestemming draagt, mag haar poorten passeren.</p>
-    <p>Van de Noordpoort tot de Zuidpoort loopt de <strong>Weg van Balans</strong>, de centrale as van de stad. Tempels, archieven, markten en zalen van macht liggen langs deze route, allen verbonden door hetzelfde geloof: geen licht zonder schaduw, geen macht zonder plicht, geen leven zonder herinnering.</p>
-    <p>Kristallen van eeuwenoude kracht stromen door de aders van Elyrion. Zij worden niet gedolven, maar gebonden — elk kristal is verbonden met de Rift en met de wil van de Vezarin, en voedt tempel, stad en volk gelijk.</p>
+  <div class="figure-grid">
+    <div class="text">
+      <p>Diep in de marmeren hooglanden, verscholen achter mist, ruïne en eeuwenoude wardens, ligt <strong>Elyrion</strong> — door hen die haar ooit vanaf de rivier zagen liggen ook wel <em>Witherbridge</em> genoemd. De stad is niet te vinden door wie haar zoekt; alleen wie een doel of toestemming draagt, mag haar poorten passeren.</p>
+      <p>Van de Noordpoort tot de Zuidpoort loopt de <strong>Weg van Balans</strong>, de centrale as van de stad. Tempels, archieven, markten en zalen van macht liggen langs deze route, allen verbonden door hetzelfde geloof: geen licht zonder schaduw, geen macht zonder plicht, geen leven zonder herinnering.</p>
+      <p>In het hart van de stad rijst de <strong>Spira van Balans</strong> op, waar de Kroon van Balans Solir en Noxir in eeuwig evenwicht houdt — en van daaruit stromen de kristallen van eeuwenoude kracht door elke ader van Elyrion.</p>
+    </div>
+    <div class="art">
+      <div class="frame">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <img src="images/witherbridge-map.jpg" alt="Kaart van Witherbridge, de verholen rivierstad van de Vezarin">
+      </div>
+      <div class="plate-caption">
+        <div class="cap-title">Witherbridge</div>
+        <div class="cap-sub">De stad beneden de sluier, verscholen in de stroom van de rivier.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -366,34 +445,98 @@
 <!-- DISTRICTS -->
 <section>
   <div class="section-head center">
-    <span class="label">Wijken van Elyrion</span>
+    <span class="label"><span class="dia"></span>Wijken van Elyrion<span class="dia"></span></span>
     <h2>Vijf Delen, Eén Stad</h2>
   </div>
   <div class="districts-grid">
     <div class="district">
-      <span class="num">I</span>
-      <h3>De Ascendant Spire</h3>
-      <p>Citadel van de Harmonics. Het hoogste punt van de stad, vanwaar de heersers de balans bewaken en het rijk leiden.</p>
+      <div class="thumb"><span class="num">I</span><img src="images/district-ascendant-spire.jpg" alt="De Ascendant Spire"></div>
+      <div class="body">
+        <h3>De Ascendant Spire</h3>
+        <p>Citadel van de Harmonics. Het hoogste punt van de stad, vanwaar de heersers de balans bewaken en het rijk leiden.</p>
+      </div>
     </div>
     <div class="district">
-      <span class="num">II</span>
-      <h3>De Tempelwijken</h3>
-      <p>Het spirituele hart. Tempels van Solir en heiligdommen van Noxir staan er, zij aan zij, in eeuwige harmonie.</p>
+      <div class="thumb"><span class="num">II</span><img src="images/district-temple-wards.jpg" alt="De Tempelwijken"></div>
+      <div class="body">
+        <h3>De Tempelwijken</h3>
+        <p>Het spirituele hart. Tempels van Solir en heiligdommen van Noxir staan er, zij aan zij, in eeuwige harmonie.</p>
+      </div>
     </div>
     <div class="district">
-      <span class="num">III</span>
-      <h3>De Conduithallen</h3>
-      <p>Zetel van de Conduits. Hier pulseren de kristallen van de stad met energie, en worden strategie, wet en orde gevormd.</p>
+      <div class="thumb"><span class="num">III</span><img src="images/district-conduit-halls.jpg" alt="De Conduithallen"></div>
+      <div class="body">
+        <h3>De Conduithallen</h3>
+        <p>Zetel van de Conduits. Hier pulseren de kristallen van de stad met energie, en worden strategie, wet en orde gevormd.</p>
+      </div>
     </div>
     <div class="district">
-      <span class="num">IV</span>
-      <h3>De Koopmanskanalen</h3>
-      <p>Handel stroomt als water. Goederen, kennis en geheimen reizen via deze kanalen naar elk deel van het rijk.</p>
+      <div class="thumb"><span class="num">IV</span><img src="images/district-merchant-canals.jpg" alt="De Koopmanskanalen"></div>
+      <div class="body">
+        <h3>De Koopmanskanalen</h3>
+        <p>Handel stroomt als water. Goederen, kennis en geheimen reizen via deze kanalen naar elk deel van het rijk.</p>
+      </div>
     </div>
     <div class="district">
-      <span class="num">V</span>
-      <h3>De Verhulde Wijken</h3>
-      <p>Huizen, tavernes en stil leven, waar de Keepers wonen. Dieper nog liggen hier de Rift-archieven en de Verhulde Poort — enkel voor wie geroepen wordt.</p>
+      <div class="thumb"><span class="num">V</span><img src="images/district-veiled-quarters.jpg" alt="De Verhulde Wijken"></div>
+      <div class="body">
+        <h3>De Verhulde Wijken</h3>
+        <p>Huizen, tavernes en stil leven, waar de Keepers wonen. Dieper nog liggen hier de Rift-archieven en de Verhulde Poort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="balance"><span class="side left">Kristal</span><div class="track"><div class="marker"></div></div><span class="side right">Ruïne</span></div>
+
+<!-- PLACES OF POWER -->
+<section>
+  <div class="section-head center">
+    <span class="label violet"><span class="dia"></span>Plekken van Macht<span class="dia"></span></span>
+    <h2>Waar de Balans Woont</h2>
+  </div>
+  <div class="pop-grid">
+    <div class="pop-card">
+      <div class="thumb"><img src="images/pop-spire-of-balance.jpg" alt="De Spira van Balans"></div>
+      <div class="body">
+        <h3>De Spira van Balans</h3>
+        <p>Het middelpunt van Elyrion. Bevat de Kroon van Balans, die Solir en Noxir in evenwicht houdt en de stad in harmonie bewaart.</p>
+      </div>
+    </div>
+    <div class="pop-card">
+      <div class="thumb"><img src="images/pop-sanctuary-solir.jpg" alt="Sanctum van Solir"></div>
+      <div class="body">
+        <h3>Sanctum van Solir</h3>
+        <p>Een tempel van licht en orde, gewijd aan Solir — waar de eerste stralen van elke dageraad worden geëerd.</p>
+      </div>
+    </div>
+    <div class="pop-card">
+      <div class="thumb"><img src="images/pop-sanctuary-noxir.jpg" alt="Sanctum van Noxir"></div>
+      <div class="body">
+        <h3>Sanctum van Noxir</h3>
+        <p>Een tempel van leegte en geheimen, gewijd aan Noxir — waar stilte net zo heilig is als het gesproken woord.</p>
+      </div>
+    </div>
+    <div class="pop-card">
+      <div class="thumb"><img src="images/pop-crystal-veins.jpg" alt="De Kristaladers"></div>
+      <div class="body">
+        <h3>De Kristaladers</h3>
+        <p>Natuurlijke kristallen die door de stad stromen en energie leveren in plaats van voedsel — de levensaders van Elyrion.</p>
+      </div>
+    </div>
+    <div class="pop-card">
+      <div class="thumb"><img src="images/pop-fallen-paths.jpg" alt="De Gevallen Paden"></div>
+      <div class="body">
+        <h3>De Gevallen Paden</h3>
+        <p>Ruïnes van oude gebouwen, verspreid door de stad — een stille herinnering aan de prijs van onbalans.</p>
+      </div>
+    </div>
+    <div class="pop-card">
+      <div class="thumb"><img src="images/pop-veiled-gates.jpg" alt="De Verhulde Poorten"></div>
+      <div class="body">
+        <h3>De Verhulde Poorten</h3>
+        <p>Verborgen in- en uitgangen die alleen de Vezarin kennen, gehuld in wardens ouder dan de stad zelf.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -403,58 +546,37 @@
 <!-- LAWS -->
 <section>
   <div class="section-head center">
-    <span class="label violet">De Zeven Beginselen</span>
+    <span class="label violet"><span class="dia"></span>De Zeven Beginselen<span class="dia"></span></span>
     <h2>De Wet van Balans</h2>
   </div>
   <div class="laws">
     <div class="law">
       <div class="roman">I</div>
-      <div>
-        <h3>Balans staat boven verlangen</h3>
-        <p>Solir en Noxir zijn geen vijanden, maar tegenwichten. Wie voor één kant kiest, verliest zichzelf.</p>
-      </div>
+      <div><h3>Balans staat boven verlangen</h3><p>Solir en Noxir zijn geen vijanden, maar tegenwichten. Wie voor één kant kiest, verliest zichzelf.</p></div>
     </div>
     <div class="law">
       <div class="roman">II</div>
-      <div>
-        <h3>Niemand leeft zonder rol</h3>
-        <p>Zonder taak verliest een Vezarin zijn betekenis, en drijft langzaam af naar onbalans.</p>
-      </div>
+      <div><h3>Niemand leeft zonder rol</h3><p>Zonder taak verliest een Vezarin zijn betekenis, en drijft langzaam af naar onbalans.</p></div>
     </div>
     <div class="law">
       <div class="roman">III</div>
-      <div>
-        <h3>Voeding komt uit het onzichtbare</h3>
-        <p>De Vezarin eten niet zoals stervelingen; zij absorberen energie uit kristallen, manen en de Rift zelf.</p>
-      </div>
+      <div><h3>Voeding komt uit het onzichtbare</h3><p>De Vezarin eten niet zoals stervelingen; zij absorberen energie uit kristallen, manen en de Rift zelf.</p></div>
     </div>
     <div class="law">
       <div class="roman">IV</div>
-      <div>
-        <h3>Slaap is een reis, geen rust</h3>
-        <p>In het Tussen wordt de innerlijke balans hersteld — niet in de slaap van gewone wezens.</p>
-      </div>
+      <div><h3>Slaap is een reis, geen rust</h3><p>In het Tussen wordt de innerlijke balans hersteld — niet in de slaap van gewone wezens.</p></div>
     </div>
     <div class="law">
       <div class="roman">V</div>
-      <div>
-        <h3>Symbolen spreken waar woorden falen</h3>
-        <p>Tekens, energie en stille telepathische pulsen binden het volk sterker dan taal ooit zou kunnen.</p>
-      </div>
+      <div><h3>Symbolen spreken waar woorden falen</h3><p>Tekens, energie en stille telepathische pulsen binden het volk sterker dan taal ooit zou kunnen.</p></div>
     </div>
     <div class="law">
       <div class="roman">VI</div>
-      <div>
-        <h3>Herinnering weegt zwaarder dan trots</h3>
-        <p>Geschiedenis en balans gaan boven eer. Wat vergeten wordt, kan zich herhalen.</p>
-      </div>
+      <div><h3>Herinnering weegt zwaarder dan trots</h3><p>Geschiedenis en balans gaan boven eer. Wat vergeten wordt, kan zich herhalen.</p></div>
     </div>
     <div class="law">
       <div class="roman">VII</div>
-      <div>
-        <h3>Wie de balans verliest, wordt Fused</h3>
-        <p>Geen straf uit wraak, maar een scheiding om de rest van het volk te beschermen.</p>
-      </div>
+      <div><h3>Wie de balans verliest, wordt Fused</h3><p>Geen straf uit wraak, maar een scheiding om de rest van het volk te beschermen.</p></div>
     </div>
   </div>
 </section>
@@ -462,33 +584,21 @@
 <!-- HIERARCHY -->
 <section>
   <div class="section-head center">
-    <span class="label">De Orde van het Volk</span>
+    <span class="label"><span class="dia"></span>De Orde van het Volk<span class="dia"></span></span>
     <h2>De Hiërarchie van de Vezarin</h2>
   </div>
   <div class="hier">
-    <div class="tier">
-      <div class="name">De Harmonic</div>
-      <p>De heersers. De perfecte balans tussen Solir en Noxir — zeldzaam gezien, en om die reden onbetwist.</p>
-    </div>
-    <div class="tier">
-      <div class="name">De Conduits</div>
-      <p>De elite. Sterk in het beheersen van één kant van de balans, en verantwoordelijk voor wet en strategie.</p>
-    </div>
-    <div class="tier">
-      <div class="name">De Keepers</div>
-      <p>Het gewone volk. Zij onderhouden Elyrion, bouwen haar zalen en houden de stad in leven, dag na dag.</p>
-    </div>
-    <div class="tier">
-      <div class="name">De Fused</div>
-      <p>De verstotenen. Wie zijn balans voorgoed verloor, wordt gevreesd of verbannen naar de diepten onder de stad.</p>
-    </div>
+    <div class="tier"><div class="name">De Harmonic</div><p>De heersers. De perfecte balans tussen Solir en Noxir — zeldzaam gezien, en om die reden onbetwist.</p></div>
+    <div class="tier"><div class="name">De Conduits</div><p>De elite. Sterk in het beheersen van één kant van de balans, en verantwoordelijk voor wet en strategie.</p></div>
+    <div class="tier"><div class="name">De Keepers</div><p>Het gewone volk. Zij onderhouden Elyrion, bouwen haar zalen en houden de stad in leven, dag na dag.</p></div>
+    <div class="tier"><div class="name">De Fused</div><p>De verstotenen. Wie zijn balans voorgoed verloor, wordt gevreesd of verbannen naar de diepten onder de stad.</p></div>
   </div>
 </section>
 
 <!-- ROLES -->
 <section>
   <div class="section-head center">
-    <span class="label violet">Taken Binnen de Balans</span>
+    <span class="label violet"><span class="dia"></span>Taken Binnen de Balans<span class="dia"></span></span>
     <h2>Rollen in de Samenleving</h2>
   </div>
   <div class="roles-grid">
@@ -496,7 +606,7 @@
     <div class="role"><span class="name">Archivist</span><p>Bewaarders van kennis en geschiedenis.</p></div>
     <div class="role"><span class="name">Riftwalker</span><p>Verkennen en bewaken de scheuren van de Rift.</p></div>
     <div class="role"><span class="name">Artisan</span><p>Bouwers, vaklieden en vernieuwers.</p></div>
-    <div class="role"><span class="name">Embermage</span><p>Zij die licht of leegte-energie beheersen.</p></div>
+    <div class="role"><span class="name">Embermage</span><p>Zij die licht- of leegte-energie beheersen.</p></div>
   </div>
 </section>
 
@@ -505,7 +615,7 @@
 <!-- TIMELINE -->
 <section>
   <div class="section-head center">
-    <span class="label">Oorsprong</span>
+    <span class="label"><span class="dia"></span>Oorsprong<span class="dia"></span></span>
     <h2>De Tijdlijn van de Vezarin</h2>
   </div>
   <div class="timeline">
@@ -540,7 +650,7 @@
 <!-- BORDERS -->
 <section>
   <div class="section-head center">
-    <span class="label">Grenzen van het Rijk</span>
+    <span class="label"><span class="dia"></span>Grenzen van het Rijk<span class="dia"></span></span>
     <h2>Wie Zich om Elyrion Verzamelt</h2>
   </div>
   <div class="borders-grid">
@@ -558,6 +668,7 @@
 </section>
 
 <footer>
+  <div class="sigil"><span></span></div>
   <div class="glyphline">Eén Balans · Eén Rift · Eén Volk</div>
 </footer>
 
